@@ -8,6 +8,7 @@ const logger = require('./middlewares/logger');
 const genres = require('./routes/genres')
 const home = require('./routes/home')
 const customers = require('./routes/customers');
+const movie = require('./routes/movie');
 const express = require('express');
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(helmet());
 app.use(logger);
+app.use('/api.movies/', movies);
 app.use('/api/genres/', genres);
 app.use('/api/customers/', customers);
 app.use('/', home);
