@@ -1,10 +1,12 @@
+const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi);
 const startupDebugger = require('debug')('app:startup');
 // const dbDebugger = require('debug')('app:db');
 const mongoose = require('mongoose');
 const config = require('config');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const logger = require('./middlewares/logger');
+// const logger = require('./middlewares/logger');
 const genres = require('./routes/genres')
 const home = require('./routes/home')
 const customers = require('./routes/customers');
@@ -26,10 +28,10 @@ mongoose.connect('mongodb://localhost/vidly', {  useNewUrlParser: true, useUnifi
 
 // MIDDLEWARES
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+// app.use(express.urlencoded({ extended: true }));
+// app.use(express.static('public'));
 app.use(helmet());
-app.use(logger);
+// app.use(logger);
 app.use('/api.movies/', movies);
 app.use('/api/genres/', genres);
 app.use('/api/customers/', customers);
