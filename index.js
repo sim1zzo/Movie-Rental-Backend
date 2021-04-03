@@ -12,7 +12,8 @@ const home = require('./routes/home')
 const customers = require('./routes/customers');
 const users = require('./routes/users');
 const movies = require('./routes/movies');
-const rentals  = require('./routes/rentals')
+const rentals = require('./routes/rentals');
+const auth = require('./routes/auth');
 const express = require('express');
 const app = express();
 
@@ -20,7 +21,12 @@ app.set('view engine', 'pug');
 // app.set('views', './views'); //default -> is optional
 
 
-mongoose.connect('mongodb://localhost/vidly', {  useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify : false})
+mongoose.connect('mongodb://localhost/vidly', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true
+})
   .then(() => console.log('Connected to MongoDb...'))
   .catch(err => console.error("Cannot connect to DB ", err));
 
@@ -33,12 +39,14 @@ app.use(express.json());
 // app.use(express.static('public'));
 app.use(helmet());
 // app.use(logger);
-app.use('/api.movies', movies);
+app.use('/api/movies', movies);
 app.use('/api/genres', genres);
 app.use('/api/customers', customers);
 app.use('/api/rentals', rentals);
 app.use('/api/users', users);
+app.use('/api/auth', auth);
 app.use('/', home);
+
 
 
 
