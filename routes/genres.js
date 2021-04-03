@@ -1,3 +1,4 @@
+const auth = require('../middlewares/auth');
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
@@ -19,7 +20,8 @@ router.get('/:id',async (req, res) => {
   res.send(genre);
 });
 
-router.post('/', async (req, res) => {
+router.post('/',auth, async (req, res) => {
+  
   const { error } = validate(req.body);
   if (error) return res.status(200).send(error.details[0].message);
 
