@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
-Joi.objectId = require('joi-objectid')(Joi);
+
 
 /* I intentionally didnt import customer in this schema, instead I have created a new one
 in this way i have full control of what datatype I can insert. */
