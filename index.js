@@ -1,5 +1,6 @@
 require('express-async-errors');
 const winston = require('winston'); // logger object or a transport 
+require('winston-mongodb'); // logger object or a transport 
 const error = require('./middlewares/error');
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
@@ -19,9 +20,18 @@ const auth = require('./routes/auth');
 const express = require('express');
 const app = express();
 
-// winston.add(winston.transports.File, { filename: 'logfile.log' }); deprecated.
-winston.add(new winston.transports.File({ filename: 'logfile.log' }));
+winston.handleExceptions(
+  new winston.transports.File({ filename: 'uncaughtException.log' }));
+  
+process.on('unhanandledRejection', (ex) => {
+  throw ex;
+});
 
+
+winston.add(new winston.transports.File({ filename: 'logfile.log' }));
+winston.add(
+  new winston.transports.MongoDB({ db: "mongodb://localhost/vidly" })
+);
 
 
 app.set('view engine', 'pug');
