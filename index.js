@@ -1,4 +1,5 @@
 require('express-async-errors');
+const winston = require('winston'); // logger object or a transport 
 const error = require('./middlewares/error');
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
@@ -17,6 +18,11 @@ const rentals = require('./routes/rentals');
 const auth = require('./routes/auth');
 const express = require('express');
 const app = express();
+
+// winston.add(winston.transports.File, { filename: 'logfile.log' }); deprecated.
+winston.add(new winston.transports.File({ filename: 'logfile.log' }));
+
+
 
 app.set('view engine', 'pug');
 // app.set('views', './views'); //default -> is optional
