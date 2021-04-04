@@ -1,3 +1,5 @@
+const auth = require('../middlewares/auth');
+const admin = require('../middlewares/admin');
 const { Movie, validate } = require('../models/movie');
 const { Genre } = require('../models/genre');
 const mongoose = require('mongoose');
@@ -18,7 +20,7 @@ router.get('/:id', async (req, res) => {
   res.send(movie);
 });
 
-router.post('/', async (req, res)=> {
+router.post('/', auth,async (req, res)=> {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.detail[0].message);
 
@@ -53,7 +55,7 @@ router.put('/id', async function (req, res) {
   await movie.updateOne(update);
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',[auth,admin], async (req, res) => {
   const movie = await Movie.findByIdAndDelete(req.params.id);
 
   if (!customer) return res.status(400).send('The customer with the given ID was not found')
