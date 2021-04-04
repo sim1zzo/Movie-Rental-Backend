@@ -9,18 +9,18 @@ const router = express.Router();
 
 
 router.get('/', async (req, res) => {
-  const movies = await Movies.find().sort('name');
+  const movies = await Movie.find().sort('name');
   res.send(movies);
 });
 
 router.get('/:id', async (req, res) => {
-  const movie = await Movies.findById(req.params.id);
+  const movie = await Movie.findById(req.params.id);
   if (!movie) return res.status(400).send('The movie with the given ID was not found');
 
   res.send(movie);
 });
 
-router.post('/', auth,async (req, res)=> {
+router.post('/',async (req, res)=> {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.detail[0].message);
 
