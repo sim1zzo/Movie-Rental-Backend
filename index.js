@@ -63,7 +63,7 @@ if (app.get('env') === 'development') {
 
 if (!config.get('jwtPrivateKey')) {
   console.log('FATAL ERROR: jwtPrivateKey is not defined');
-  process.exit(1); // exit indicate success all the rest failure
+  process.exit(1); // 0 indicate success all the rest failure
 }
 
 // dbDebugger('Connected to the database');
